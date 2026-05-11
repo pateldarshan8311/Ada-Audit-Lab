@@ -42,7 +42,7 @@ const auditRequestSchema = z
 
 function getAllowedOrigins() {
   const configured = process.env.CORS_ALLOWED_ORIGINS?.trim();
-  const fallback = process.env.FRONTEND_ORIGIN?.trim() || "http://localhost:3000";
+  const fallback = process.env.FRONTEND_ORIGIN?.trim() || "http://localhost:3000,https://ada-audit-lab.netlify.app";
 
   return (configured || fallback)
     .split(",")

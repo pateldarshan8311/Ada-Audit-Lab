@@ -51,11 +51,25 @@ const STAGES = [
   { progress: 92, label: "Generating AI fix guidance and final comparison model" }
 ] as const;
 
-const DEFAULT_API_BASE_URL = "http://localhost:4000/api";
+const DEFAULT_LOCAL_API_BASE_URL = "http://localhost:4000/api";
+const DEFAULT_PRODUCTION_API_BASE_URL = "https://ada-audit-lab.onrender.com/api";
 
 function getApiBaseUrl() {
   const configured = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
-  return (configured || DEFAULT_API_BASE_URL).replace(/\/+$/, "");
+
+  if (configured) {
+    return configured.replace(/\/+$/, "");
+  }
+
+  if (typeof window !== "undefined") {
+    const { hostname } = window.location;
+
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return DEFAULT_LOCAL_API_BASE_URL;
+    }
+  }
+
+  return DEFAULT_PRODUCTION_API_BASE_URL;
 }
 
 function getApiUrl(path: string) {
