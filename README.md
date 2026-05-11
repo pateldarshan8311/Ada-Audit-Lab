@@ -1,4 +1,4 @@
-# Pulse ADA Audit Lab
+# Ada Audit Lab
 
 Frontend deploys to Netlify as a static Next.js export. Backend deploys to Render as a Node/Express service that runs Lighthouse, Puppeteer, axe-core, and AI remediation, with MongoDB-backed report storage in production.
 
