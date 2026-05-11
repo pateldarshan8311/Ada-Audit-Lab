@@ -1,5 +1,4 @@
 import puppeteer from "puppeteer";
-import { launch } from "chrome-launcher";
 
 const DEFAULT_FLAGS = [
   "--headless=new",
@@ -15,31 +14,48 @@ const DEFAULT_FLAGS = [
   "--disable-setuid-sandbox"
 ];
 
-export async function launchPuppeteerBrowser() {
-  const bundledExecutablePath = puppeteer.executablePath();
+const LIGHTHOUSE_DEBUGGING_FLAG = "--remote-debugging-port=0";
 
-  return puppeteer.launch({
+function getExecutablePath() {
+  return (
+    process.env.LIGHTHOUSE_CHROME_PATH ||
+    process.env.PUPPETEER_EXECUTABLE_PATH ||
+    puppeteer.executablePath() ||
+    undefined
+  );
+}
+
+function createLaunchOptions(extraArgs: string[] = []) {
+  return {
     headless: true,
-    args: DEFAULT_FLAGS,
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || bundledExecutablePath || undefined,
+    args: [...DEFAULT_FLAGS, ...extraArgs],
+    executablePath: getExecutablePath(),
     defaultViewport: {
       width: 1440,
       height: 960,
       deviceScaleFactor: 1
     }
-  });
+  };
+}
+
+export async function launchPuppeteerBrowser() {
+  return puppeteer.launch(createLaunchOptions());
 }
 
 export async function launchLighthouseChrome() {
-  const bundledExecutablePath = puppeteer.executablePath();
+  const browser = await puppeteer.launch(createLaunchOptions([LIGHTHOUSE_DEBUGGING_FLAG]));
+  const endpoint = new URL(browser.wsEndpoint());
+  const port = Number(endpoint.port);
 
-  return launch({
-    chromePath:
-      process.env.LIGHTHOUSE_CHROME_PATH ||
-      process.env.PUPPETEER_EXECUTABLE_PATH ||
-      bundledExecutablePath ||
-      undefined,
-    chromeFlags: DEFAULT_FLAGS,
-    logLevel: "error"
-  });
+  if (!Number.isFinite(port)) {
+    await browser.close();
+    throw new Error("Could not determine the Lighthouse debugging port.");
+  }
+
+  return {
+    port,
+    kill: async () => {
+      await browser.close();
+    }
+  };
 }
