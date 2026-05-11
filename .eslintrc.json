@@ -1,0 +1,4 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "ignorePatterns": ["backend/**", "lib/ai/**", "lib/audit/**", "lib/server/**", "out/**"]
+}

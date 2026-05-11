@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: pulse-ada-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_MODEL
+        value: gpt-5-mini
+      - key: MONGODB_DB_NAME
+        value: pulse_ada_audit_lab
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: PUPPETEER_EXECUTABLE_PATH
+        sync: false
+      - key: LIGHTHOUSE_CHROME_PATH
+        sync: false

@@ -1,0 +1,35 @@
+{
+  "name": "pulse-ada-audit-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "@axe-core/puppeteer": "4.11.1",
+    "axe-core": "4.11.1",
+    "chrome-launcher": "1.2.1",
+    "cors": "2.8.5",
+    "dotenv": "16.5.0",
+    "express": "5.1.0",
+    "lighthouse": "11.2.0",
+    "mongodb": "6.19.0",
+    "openai": "6.33.0",
+    "puppeteer": "24.40.0",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@types/cors": "2.8.19",
+    "@types/express": "5.0.3",
+    "@types/node": "25.5.0",
+    "tsc-alias": "1.8.16",
+    "tsx": "4.20.5",
+    "typescript": "5.9.3"
+  }
+}

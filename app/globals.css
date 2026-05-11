@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Avenir Next", "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", "IBM Plex Mono", "Menlo", monospace;
+  --bg: #060d16;
+  --bg-elevated: rgba(10, 18, 31, 0.8);
+  --panel: rgba(14, 24, 40, 0.78);
+  --panel-strong: rgba(10, 19, 32, 0.94);
+  --line: rgba(148, 163, 184, 0.16);
+  --line-strong: rgba(148, 163, 184, 0.28);
+  --text: #e5eefb;
+  --muted: #95a7bf;
+  --accent: #22d3ee;
+  --accent-2: #84cc16;
+  --accent-3: #f59e0b;
+  --danger: #fb7185;
+  --shadow: 0 28px 90px rgba(2, 8, 23, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans), sans-serif;
+  background:
+    radial-gradient(circle at top right, rgba(34, 211, 238, 0.15), transparent 32%),
+    radial-gradient(circle at top left, rgba(132, 204, 22, 0.14), transparent 28%),
+    linear-gradient(180deg, #091220 0%, #060d16 42%, #050b14 100%);
+  color: var(--text);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono), monospace;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.24);
+}
+
+.panel {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(8, 15, 27, 0.92));
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.metric-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.glass-divider {
+  border-color: var(--line);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 211, 238, 0.4) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.35);
+  border-radius: 999px;
+}
+
+.dashed-surface {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
