@@ -16,10 +16,12 @@ const DEFAULT_FLAGS = [
 ];
 
 export async function launchPuppeteerBrowser() {
+  const bundledExecutablePath = puppeteer.executablePath();
+
   return puppeteer.launch({
     headless: true,
     args: DEFAULT_FLAGS,
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || bundledExecutablePath || undefined,
     defaultViewport: {
       width: 1440,
       height: 960,
@@ -29,8 +31,14 @@ export async function launchPuppeteerBrowser() {
 }
 
 export async function launchLighthouseChrome() {
+  const bundledExecutablePath = puppeteer.executablePath();
+
   return launch({
-    chromePath: process.env.LIGHTHOUSE_CHROME_PATH || process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    chromePath:
+      process.env.LIGHTHOUSE_CHROME_PATH ||
+      process.env.PUPPETEER_EXECUTABLE_PATH ||
+      bundledExecutablePath ||
+      undefined,
     chromeFlags: DEFAULT_FLAGS,
     logLevel: "error"
   });
